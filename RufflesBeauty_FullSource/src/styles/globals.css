@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-pure-white text-editorial-black font-typewriter;
+  scroll-behavior: smooth;
+}
