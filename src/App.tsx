@@ -1,24 +1,21 @@
 import React from 'react';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import TrustSignals from './components/TrustSignals';
-import OurStory from './components/OurStory';
-import Services from './components/Services';
+import { motion } from 'framer-motion';
+import LandingPage from './components/LandingPage';
 import Gallery from './components/Gallery';
-import Testimonials from './components/Testimonials';
-import Footer from './components/Footer';
+import Services from './components/Services';
+import Confessions from './components/Confessions';
+import GalleryWall from './components/GalleryWall';
+import CallToService from './components/CallToService';
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      <Hero />
-      <TrustSignals />
-      <OurStory />
-      <Services />
+    <div className="min-h-screen bg-pure-white">
+      <LandingPage />
       <Gallery />
-      <Testimonials />
-      <Footer />
+      <Services />
+      <Confessions />
+      <GalleryWall />
+      <CallToService />
     </div>
   );
 }

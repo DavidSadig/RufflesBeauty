@@ -1,173 +1,217 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { X } from 'lucide-react';
 
-const Gallery = () => {
-  const [selectedImage, setSelectedImage] = useState<number | null>(null);
-  
-  const transformations = [
-    {
-      before: "https://images.pexels.com/photos/3993461/pexels-photo-3993461.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
-      after: "https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
-      title: "Classic Bob Transformation",
-      description: "Modern take on a timeless style"
-    },
-    {
-      before: "https://images.pexels.com/photos/3065209/pexels-photo-3065209.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
-      after: "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
-      title: "Elegant Updo",
-      description: "Perfect for special occasions"
-    },
-    {
-      before: "https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
-      after: "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
-      title: "Color & Style Refresh",
-      description: "Gentle highlights and modern cut"
-    },
-    {
-      before: "https://images.pexels.com/photos/3065171/pexels-photo-3065171.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
-      after: "https://images.pexels.com/photos/1181519/pexels-photo-1181519.jpeg?auto=compress&cs=tinysrgb&w=400&h=600&fit=crop",
-      title: "Sophisticated Layers",
-      description: "Adding volume and movement"
+const galleryImages = [
+  {
+    src: 'https://images.pexels.com/photos/3065171/pexels-photo-3065171.jpeg?auto=compress&cs=tinysrgb&w=800',
+    caption: 'Tension / Release',
+    size: 'large'
+  },
+  {
+    src: 'https://images.pexels.com/photos/3997991/pexels-photo-3997991.jpeg?auto=compress&cs=tinysrgb&w=600',
+    caption: 'Razor Light',
+    size: 'medium'
+  },
+  {
+    src: 'https://images.pexels.com/photos/5069432/pexels-photo-5069432.jpeg?auto=compress&cs=tinysrgb&w=800',
+    caption: 'She Walked In.',
+    size: 'large'
+  },
+  {
+    src: 'https://images.pexels.com/photos/3762667/pexels-photo-3762667.jpeg?auto=compress&cs=tinysrgb&w=600',
+    caption: 'Hot Wax, Cold Heart.',
+    size: 'small'
+  },
+  {
+    src: 'https://images.pexels.com/photos/4004374/pexels-photo-4004374.jpeg?auto=compress&cs=tinysrgb&w=800',
+    caption: 'Chrome Dreams',
+    size: 'medium'
+  },
+  {
+    src: 'https://images.pexels.com/photos/3573382/pexels-photo-3573382.jpeg?auto=compress&cs=tinysrgb&w=800',
+    caption: 'Golden Hour',
+    size: 'large'
+  },
+  {
+    src: 'https://images.pexels.com/photos/3065209/pexels-photo-3065209.jpeg?auto=compress&cs=tinysrgb&w=600',
+    caption: 'Heat Wave',
+    size: 'medium'
+  },
+  {
+    src: 'https://images.pexels.com/photos/1319460/pexels-photo-1319460.jpeg?auto=compress&cs=tinysrgb&w=600',
+    caption: 'Sharp Lines',
+    size: 'small'
+  },
+  {
+    src: 'https://images.pexels.com/photos/3065264/pexels-photo-3065264.jpeg?auto=compress&cs=tinysrgb&w=800',
+    caption: 'Crown Work',
+    size: 'large'
+  },
+  {
+    src: 'https://images.pexels.com/photos/4004372/pexels-photo-4004372.jpeg?auto=compress&cs=tinysrgb&w=600',
+    caption: 'Artistry',
+    size: 'small'
+  },
+  {
+    src: 'https://images.pexels.com/photos/3065203/pexels-photo-3065203.jpeg?auto=compress&cs=tinysrgb&w=600',
+    caption: 'Volume Queen',
+    size: 'medium'
+  },
+  {
+    src: 'https://images.pexels.com/photos/5069431/pexels-photo-5069431.jpeg?auto=compress&cs=tinysrgb&w=600',
+    caption: 'French Precision',
+    size: 'small'
+  },
+];
+
+const Gallery: React.FC = () => {
+  const [selectedImage, setSelectedImage] = useState<typeof galleryImages[0] | null>(null);
+
+  const getSizeClasses = (size: string) => {
+    switch (size) {
+      case 'large': return 'w-80 h-96';
+      case 'medium': return 'w-64 h-80';
+      case 'small': return 'w-48 h-64';
+      default: return 'w-64 h-80';
     }
-  ];
+  };
 
-  const galleryImages = [
-    "https://images.pexels.com/photos/3993456/pexels-photo-3993456.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
-    "https://images.pexels.com/photos/3993451/pexels-photo-3993451.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
-    "https://images.pexels.com/photos/3065171/pexels-photo-3065171.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
-    "https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
-    "https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop",
-    "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop"
+  // Define specific positions for true collage layout
+  const collagePositions = [
+    { left: '5%', top: '10%', rotation: -7, zIndex: 15 },      // Large anchor - top left
+    { left: '25%', top: '5%', rotation: 3, zIndex: 12 },       // Medium - overlapping
+    { left: '45%', top: '15%', rotation: -4, zIndex: 20 },     // Large anchor - center
+    { left: '35%', top: '8%', rotation: 8, zIndex: 8 },        // Small - behind center
+    { left: '65%', top: '25%', rotation: -2, zIndex: 14 },     // Medium - right side
+    { left: '75%', top: '5%', rotation: 6, zIndex: 18 },       // Large anchor - top right
+    { left: '15%', top: '45%', rotation: -5, zIndex: 16 },     // Medium - left bottom
+    { left: '8%', top: '35%', rotation: 4, zIndex: 10 },       // Small - overlapping left
+    { left: '55%', top: '50%', rotation: -8, zIndex: 22 },     // Large - bottom center
+    { left: '70%', top: '45%', rotation: 2, zIndex: 9 },       // Small - right bottom
+    { left: '30%', top: '60%', rotation: -3, zIndex: 13 },     // Medium - bottom
+    { left: '80%', top: '60%', rotation: 5, zIndex: 11 },      // Small - far right
   ];
 
   return (
-    <section id="gallery" className="py-20 bg-gradient-to-b from-gray-50 to-purple-50">
-      <div className="container mx-auto px-4">
-        <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-serif font-semibold text-gray-800 mb-6">
-              <span className="italic text-purple-700">Transformations</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              See the beautiful transformations we've created for our clients. Every before and after 
-              tells a story of confidence and renewed beauty.
-            </p>
-            <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto rounded-full mt-6"></div>
-          </div>
+    <section className="min-h-screen bg-pure-white py-32 px-8 relative overflow-hidden">
+      {/* Section Title */}
+      <motion.div
+        initial={{ opacity: 0, x: -100 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 1.5 }}
+        viewport={{ once: true }}
+        className="mb-24"
+      >
+        <h2 className="text-editorial font-semibold text-6xl md:text-7xl text-editorial-black gold-underline ml-8 md:ml-16">
+          GALLERY
+        </h2>
+      </motion.div>
 
-          {/* Before & After Gallery */}
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
-            {transformations.map((transformation, index) => (
-              <div key={index} className="bg-white rounded-3xl shadow-lg overflow-hidden">
-                <div className="grid grid-cols-2">
-                  {/* Before */}
-                  <div className="relative">
-                    <img 
-                      src={transformation.before} 
-                      alt={`Before ${transformation.title}`}
-                      className="w-full h-48 object-cover"
-                    />
-                    <div className="absolute top-4 left-4 bg-gray-800 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      Before
-                    </div>
-                  </div>
-                  
-                  {/* After */}
-                  <div className="relative">
-                    <img 
-                      src={transformation.after} 
-                      alt={`After ${transformation.title}`}
-                      className="w-full h-48 object-cover"
-                    />
-                    <div className="absolute top-4 right-4 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                      After
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="p-6">
-                  <h3 className="text-xl font-serif font-semibold text-gray-800 mb-2">
-                    {transformation.title}
-                  </h3>
-                  <p className="text-gray-600 italic">
-                    {transformation.description}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Salon Gallery */}
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-serif font-semibold text-gray-800 mb-4">
-              <span className="italic text-purple-700">Our Salon</span>
-            </h3>
-            <p className="text-gray-600 leading-relaxed max-w-2xl mx-auto">
-              Step into our warm, welcoming space designed for comfort and relaxation.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {galleryImages.map((image, index) => (
-              <div 
-                key={index}
-                className="relative group cursor-pointer overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300"
-                onClick={() => setSelectedImage(index)}
-              >
-                <img 
-                  src={image} 
-                  alt={`Salon interior ${index + 1}`}
-                  className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-                  <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="text-sm font-medium">View Larger</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Lightbox Modal */}
-          {selectedImage !== null && (
-            <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4">
-              <div className="relative max-w-4xl max-h-full">
-                <button
-                  onClick={() => setSelectedImage(null)}
-                  className="absolute -top-10 right-0 text-white hover:text-gray-300 transition-colors"
-                  aria-label="Close"
-                >
-                  <X size={32} />
-                </button>
-                
-                <img 
-                  src={galleryImages[selectedImage]} 
-                  alt={`Salon interior ${selectedImage + 1}`}
-                  className="max-w-full max-h-full object-contain rounded-lg"
+      {/* Editorial Collage Wall */}
+      <div className="relative max-w-7xl mx-auto min-h-[800px]">
+        {galleryImages.map((image, index) => {
+          const position = collagePositions[index];
+          
+          return (
+            <motion.div
+              key={index}
+              initial={{ 
+                opacity: 0, 
+                scale: 0.8, 
+                rotate: position.rotation,
+                y: -100
+              }}
+              whileInView={{ 
+                opacity: 1, 
+                scale: 1, 
+                rotate: position.rotation,
+                y: 0
+              }}
+              whileHover={{ 
+                scale: 1.05, 
+                rotate: 0,
+                zIndex: 50,
+                y: -5
+              }}
+              transition={{ 
+                duration: 0.8,
+                delay: index * 0.1,
+                hover: { duration: 0.3 }
+              }}
+              viewport={{ once: true }}
+              className={`absolute cursor-pointer ${getSizeClasses(image.size)} group`}
+              style={{
+                left: position.left,
+                top: position.top,
+                zIndex: position.zIndex
+              }}
+              onClick={() => setSelectedImage(image)}
+            >
+              <div className="relative w-full h-full">
+                <img
+                  src={image.src}
+                  alt={image.caption}
+                  className="w-full h-full object-cover shadow-2xl transition-all duration-500 group-hover:shadow-3xl"
                 />
                 
-                {/* Navigation */}
-                <button
-                  onClick={() => setSelectedImage(selectedImage > 0 ? selectedImage - 1 : galleryImages.length - 1)}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-colors"
-                  aria-label="Previous image"
+                {/* Caption overlay */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  className="absolute inset-0 bg-editorial-black bg-opacity-20 flex items-end justify-start p-4"
                 >
-                  <ChevronLeft size={32} />
-                </button>
-                
-                <button
-                  onClick={() => setSelectedImage(selectedImage < galleryImages.length - 1 ? selectedImage + 1 : 0)}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-colors"
-                  aria-label="Next image"
-                >
-                  <ChevronRight size={32} />
-                </button>
+                  <span className="text-pure-white text-script italic text-lg font-medium">
+                    {image.caption}
+                  </span>
+                </motion.div>
+
+                {/* Subtle corner accent */}
+                <div className="absolute top-2 right-2 w-4 h-4 bg-gold opacity-30 transform rotate-45" />
               </div>
-            </div>
-          )}
-        </div>
+            </motion.div>
+          );
+        })}
       </div>
+
+      {/* Modal */}
+      {selectedImage && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-pure-white z-50 flex items-center justify-center p-8"
+          onClick={() => setSelectedImage(null)}
+        >
+          <button
+            className="absolute top-8 right-8 z-60 p-2 text-editorial-black hover:text-gold transition-colors"
+            onClick={() => setSelectedImage(null)}
+          >
+            <X size={32} />
+          </button>
+          
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="max-w-4xl max-h-[80vh] relative"
+          >
+            <img
+              src={selectedImage.src}
+              alt={selectedImage.caption}
+              className="w-full h-full object-contain shadow-2xl"
+            />
+            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-pure-white">
+              <h3 className="text-editorial text-2xl font-medium text-editorial-black">
+                {selectedImage.caption}
+              </h3>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+
+      {/* Bottom fold transition */}
+      <div className="absolute bottom-0 left-0 w-full h-20 bg-pure-white transform rotate-1 origin-bottom-left border-t border-gold opacity-30" />
     </section>
   );
 };
